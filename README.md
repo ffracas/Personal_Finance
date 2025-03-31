@@ -1,5 +1,177 @@
 # personal-finance
 
+## That claims this project
+
+This project is a Personal Finance Management system designed to help users track their financial status, manage
+budgets, investments, recurring expenses, and financial goals efficiently. The backend provides RESTful APIs to retrieve
+and process financial data, offering insights into assets, expenses, income, and investment performance.
+
+Key features include:
+
+Comprehensive financial overview with real-time data
+
+Budget management with spending analysis and sustainability projections
+
+Investment tracking with automatic market updates
+
+Recurring expense management with debt/credit handling
+
+Customizable financial goals to guide long-term planning
+
+This system ensures secure and efficient financial data management, leveraging authentication, caching, and scheduled
+updates for optimal performance.
+
+### Diagram ERM
+
+![imagine](finance-diagram-erm.png)
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /dashboard/overview
+    Backend ->> Database: Retrieve asset data
+    Database -->> Backend: Return asset data
+    Backend -->> User: Return summary overview
+
+```
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /dashboard/goals
+    Backend ->> Database: Retrieve financial goals
+    Database -->> Backend: Return financial goals
+    Backend -->> User: Return goal data
+
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /dashboard/expenses
+    Backend ->> Database: Retrieve expenses for the specified time period
+    Database -->> Backend: Return expense data
+    Backend -->> User: Return total expenses by category
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /dashboard/income
+    Backend ->> Database: Retrieve income for the specified time period
+    Database -->> Backend: Return income data
+    Backend -->> User: Return total income by category
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /budget/settings
+    Backend ->> Database: Retrieve current budget settings
+    Database -->> Backend: Return budget settings
+    Backend -->> User: Return current expenses vs. planned budget comparison
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /budget/recurring-expenses
+    Backend ->> Database: Register new recurring expense
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /budget/monthly-expenses
+    Backend ->> Database: Register new monthly expense
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /budget/investments
+    Backend ->> Database: Register new investment operation
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /transactions
+    Backend ->> Database: Retrieve transaction list
+    Database -->> Backend: Return transaction data
+    Backend -->> User: Return transaction list
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /transactions
+    Backend ->> Database: Register new transaction
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /recurring-expenses
+    Backend ->> Database: Add new recurring expense
+    Database -->> Backend: Confirm addition
+    Backend -->> User: Confirm successful addition
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /recurring-expenses/debt-credit
+    Backend ->> Database: Create recurring expense with debt/credit
+    Database -->> Backend: Confirm creation
+    Backend -->> User: Confirm successful creation
+
+```
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
