@@ -2,6 +2,25 @@
 
 ## That claims this project
 
+This project is a Personal Finance Management system designed to help users track their financial status, manage
+budgets, investments, recurring expenses, and financial goals efficiently. The backend provides RESTful APIs to retrieve
+and process financial data, offering insights into assets, expenses, income, and investment performance.
+
+Key features include:
+
+Comprehensive financial overview with real-time data
+
+Budget management with spending analysis and sustainability projections
+
+Investment tracking with automatic market updates
+
+Recurring expense management with debt/credit handling
+
+Customizable financial goals to guide long-term planning
+
+This system ensures secure and efficient financial data management, leveraging authentication, caching, and scheduled
+updates for optimal performance.
+
 ### Diagram ERM
 
 ![imagine](finance-diagram-erm.png)
@@ -152,7 +171,7 @@ sequenceDiagram
     Backend -->> User: Confirm successful creation
 
 ```
- 
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
