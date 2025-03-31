@@ -1,5 +1,68 @@
 # personal-finance
 
+## That claims this project
+
+### Diagram ERM
+
+![imagine](finance-diagram-erm.png)
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Utente
+    participant Backend
+    participant Database
+    Utente ->> Backend: Richiesta GET /dashboard/prospetto
+    Backend ->> Database: Recupera dati patrimoniali
+    Database -->> Backend: Restituisce dati patrimoniali
+    Backend -->> Utente: Restituisce prospetto sintetico
+    Utente ->> Backend: Richiesta GET /dashboard/obiettivi
+    Backend ->> Database: Recupera obiettivi finanziari
+    Database -->> Backend: Restituisce obiettivi finanziari
+    Backend -->> Utente: Restituisce dati obiettivi
+    Utente ->> Backend: Richiesta GET /dashboard/spese
+    Backend ->> Database: Recupera spese nel lasso di tempo specificato
+    Database -->> Backend: Restituisce dati spese
+    Backend -->> Utente: Restituisce totale spese per categoria
+    Utente ->> Backend: Richiesta GET /dashboard/entrate
+    Backend ->> Database: Recupera entrate nel lasso di tempo specificato
+    Database -->> Backend: Restituisce dati entrate
+    Backend -->> Utente: Restituisce totale entrate per categoria
+    Utente ->> Backend: Richiesta GET /budget/impostazione
+    Backend ->> Database: Recupera impostazioni attuali del budget
+    Database -->> Backend: Restituisce impostazioni budget
+    Backend -->> Utente: Restituisce confronto spese attuali vs budget previsto
+    Utente ->> Backend: Richiesta POST /budget/spese-ricorrenti
+    Backend ->> Database: Registra nuova spesa ricorrente
+    Database -->> Backend: Conferma registrazione
+    Backend -->> Utente: Conferma avvenuta registrazione
+    Utente ->> Backend: Richiesta POST /budget/spese-mensili
+    Backend ->> Database: Registra nuova spesa mensile
+    Database -->> Backend: Conferma registrazione
+    Backend -->> Utente: Conferma avvenuta registrazione
+    Utente ->> Backend: Richiesta POST /budget/investimenti
+    Backend ->> Database: Registra nuova operazione di investimento
+    Database -->> Backend: Conferma registrazione
+    Backend -->> Utente: Conferma avvenuta registrazione
+    Utente ->> Backend: Richiesta GET /movimenti
+    Backend ->> Database: Recupera lista movimenti
+    Database -->> Backend: Restituisce dati movimenti
+    Backend -->> Utente: Restituisce lista movimenti
+    Utente ->> Backend: Richiesta POST /movimenti
+    Backend ->> Database: Registra nuovo movimento
+    Database -->> Backend: Conferma registrazione
+    Backend -->> Utente: Conferma avvenuta registrazione
+    Utente ->> Backend: Richiesta POST /spese-ricorrenti
+    Backend ->> Database: Aggiunge nuova spesa ricorrente
+    Database -->> Backend: Conferma aggiunta
+    Backend -->> Utente: Conferma avvenuta aggiunta
+    Utente ->> Backend: Richiesta POST /spese-ricorrenti/debito-credito
+    Backend ->> Database: Crea spesa ricorrente con debito/credito
+    Database -->> Backend: Conferma creazione
+    Backend -->> Utente: Conferma avvenuta creazione
+```
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
