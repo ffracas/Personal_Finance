@@ -5,6 +5,7 @@ import com.example.reactive.quarkus.personal.finance.service.UserService;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 
 @Path("/user")
 public class UserController {
@@ -16,7 +17,7 @@ public class UserController {
 
     @GET
     @Path("/getUser/{userId}")
-    public Uni<UserResponseDto> getUserById(long userId) {
+    public Uni<UserResponseDto> getUserById(@PathParam("userId") long userId) {
         return userService.getUserById(userId);
     }
 }
