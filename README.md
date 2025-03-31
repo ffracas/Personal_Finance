@@ -10,59 +10,149 @@
 
 ```mermaid
 sequenceDiagram
-    participant Utente
+    participant User
     participant Backend
     participant Database
-    Utente ->> Backend: Richiesta GET /dashboard/prospetto
-    Backend ->> Database: Recupera dati patrimoniali
-    Database -->> Backend: Restituisce dati patrimoniali
-    Backend -->> Utente: Restituisce prospetto sintetico
-    Utente ->> Backend: Richiesta GET /dashboard/obiettivi
-    Backend ->> Database: Recupera obiettivi finanziari
-    Database -->> Backend: Restituisce obiettivi finanziari
-    Backend -->> Utente: Restituisce dati obiettivi
-    Utente ->> Backend: Richiesta GET /dashboard/spese
-    Backend ->> Database: Recupera spese nel lasso di tempo specificato
-    Database -->> Backend: Restituisce dati spese
-    Backend -->> Utente: Restituisce totale spese per categoria
-    Utente ->> Backend: Richiesta GET /dashboard/entrate
-    Backend ->> Database: Recupera entrate nel lasso di tempo specificato
-    Database -->> Backend: Restituisce dati entrate
-    Backend -->> Utente: Restituisce totale entrate per categoria
-    Utente ->> Backend: Richiesta GET /budget/impostazione
-    Backend ->> Database: Recupera impostazioni attuali del budget
-    Database -->> Backend: Restituisce impostazioni budget
-    Backend -->> Utente: Restituisce confronto spese attuali vs budget previsto
-    Utente ->> Backend: Richiesta POST /budget/spese-ricorrenti
-    Backend ->> Database: Registra nuova spesa ricorrente
-    Database -->> Backend: Conferma registrazione
-    Backend -->> Utente: Conferma avvenuta registrazione
-    Utente ->> Backend: Richiesta POST /budget/spese-mensili
-    Backend ->> Database: Registra nuova spesa mensile
-    Database -->> Backend: Conferma registrazione
-    Backend -->> Utente: Conferma avvenuta registrazione
-    Utente ->> Backend: Richiesta POST /budget/investimenti
-    Backend ->> Database: Registra nuova operazione di investimento
-    Database -->> Backend: Conferma registrazione
-    Backend -->> Utente: Conferma avvenuta registrazione
-    Utente ->> Backend: Richiesta GET /movimenti
-    Backend ->> Database: Recupera lista movimenti
-    Database -->> Backend: Restituisce dati movimenti
-    Backend -->> Utente: Restituisce lista movimenti
-    Utente ->> Backend: Richiesta POST /movimenti
-    Backend ->> Database: Registra nuovo movimento
-    Database -->> Backend: Conferma registrazione
-    Backend -->> Utente: Conferma avvenuta registrazione
-    Utente ->> Backend: Richiesta POST /spese-ricorrenti
-    Backend ->> Database: Aggiunge nuova spesa ricorrente
-    Database -->> Backend: Conferma aggiunta
-    Backend -->> Utente: Conferma avvenuta aggiunta
-    Utente ->> Backend: Richiesta POST /spese-ricorrenti/debito-credito
-    Backend ->> Database: Crea spesa ricorrente con debito/credito
-    Database -->> Backend: Conferma creazione
-    Backend -->> Utente: Conferma avvenuta creazione
+    User ->> Backend: GET /dashboard/overview
+    Backend ->> Database: Retrieve asset data
+    Database -->> Backend: Return asset data
+    Backend -->> User: Return summary overview
+
 ```
 
+```mermaid
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /dashboard/goals
+    Backend ->> Database: Retrieve financial goals
+    Database -->> Backend: Return financial goals
+    Backend -->> User: Return goal data
+
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /dashboard/expenses
+    Backend ->> Database: Retrieve expenses for the specified time period
+    Database -->> Backend: Return expense data
+    Backend -->> User: Return total expenses by category
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /dashboard/income
+    Backend ->> Database: Retrieve income for the specified time period
+    Database -->> Backend: Return income data
+    Backend -->> User: Return total income by category
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /budget/settings
+    Backend ->> Database: Retrieve current budget settings
+    Database -->> Backend: Return budget settings
+    Backend -->> User: Return current expenses vs. planned budget comparison
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /budget/recurring-expenses
+    Backend ->> Database: Register new recurring expense
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /budget/monthly-expenses
+    Backend ->> Database: Register new monthly expense
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /budget/investments
+    Backend ->> Database: Register new investment operation
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: GET /transactions
+    Backend ->> Database: Retrieve transaction list
+    Database -->> Backend: Return transaction data
+    Backend -->> User: Return transaction list
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /transactions
+    Backend ->> Database: Register new transaction
+    Database -->> Backend: Confirm registration
+    Backend -->> User: Confirm successful registration
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /recurring-expenses
+    Backend ->> Database: Add new recurring expense
+    Database -->> Backend: Confirm addition
+    Backend -->> User: Confirm successful addition
+
+```
+
+```mermaid 
+sequenceDiagram
+    participant User
+    participant Backend
+    participant Database
+    User ->> Backend: POST /recurring-expenses/debt-credit
+    Backend ->> Database: Create recurring expense with debt/credit
+    Database -->> Backend: Confirm creation
+    Backend -->> User: Confirm successful creation
+
+```
+ 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
