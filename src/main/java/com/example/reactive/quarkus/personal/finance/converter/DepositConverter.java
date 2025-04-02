@@ -7,18 +7,18 @@ import com.example.reactive.quarkus.personal.finance.model.response.DepositRespo
 public class DepositConverter implements Converter<DepositRequestDto, DepositResponseDto, DepositAccount> {
     @Override
     public DepositResponseDto toDto(DepositAccount entity) {
-        return new DepositResponseDto(entity.user.id, entity.investedAmount, entity.annualRate,
-                entity.startDate, entity.endDate);
+        return new DepositResponseDto(entity.getUser().id, entity.getInvestedAmount(), entity.getAnnualRate(),
+                entity.getStartDate(), entity.getEndDate());
     }
 
     @Override
     public DepositAccount toEntity(DepositRequestDto dto) {
         DepositAccount deposit = new DepositAccount();
         // todo: deposit.user da vedere
-        deposit.annualRate = dto.annualRate();
-        deposit.investedAmount = dto.investedAmount();
-        deposit.startDate = dto.startDate();
-        deposit.endDate = dto.endDate();
+        deposit.setAnnualRate(dto.annualRate());
+        deposit.setInvestedAmount(dto.investedAmount());
+        deposit.setStartDate(dto.startDate());
+        deposit.setEndDate(dto.endDate());
         return deposit;
     }
 
