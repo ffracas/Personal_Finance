@@ -18,7 +18,7 @@ public class HandlerPermission {
     @ServerRequestFilter
     public Uni<Void> filter(ResteasyReactiveContainerRequestContext requestContext) {
         String authorization = requestContext.getHeaderString("authorization");
-        return sessionClient.get().map(x -> {
+        return sessionClient.checkToken(authorization).map(x -> {
             System.out.println(x);
             return x;
         }).replaceWithVoid();
