@@ -14,7 +14,7 @@ public class ExampleBlockingAndNoBlocking {
     @Produces(MediaType.TEXT_PLAIN)
     public Uni<String> hello() {
         System.out.println("hello " + Thread.currentThread().getName());
-        return Uni.createFrom().item("hello");
+        return Uni.createFrom().item("Hello from Quarkus REST");
     }
 
     @GET
@@ -24,5 +24,5 @@ public class ExampleBlockingAndNoBlocking {
         System.out.println("hello " + Thread.currentThread().getName());
         return "hello";
     }
- 
+
 }
