@@ -9,16 +9,24 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class RecurringExpenseConverter implements Converter<RecurringExpenseRequestDto, RecurringExpenseResponseDto, RecurringExpense> {
     @Override
     public RecurringExpenseResponseDto toDto(RecurringExpense entity) {
-        return null;
+        return new RecurringExpenseResponseDto(entity.getAmount(), entity.getCategory(), entity.getFrequency(), entity.getStartDate(), entity.getEndDate());
     }
 
     @Override
     public RecurringExpense toEntity(RecurringExpenseRequestDto dto) {
-        return null;
+        RecurringExpense recurringExpense = new RecurringExpense();
+        recurringExpense.setAmount(dto.amount());
+        recurringExpense.setCategory(dto.category());
+        recurringExpense.setFrequency(dto.frequency());
+        recurringExpense.setStartDate(dto.startDate());
+        recurringExpense.setEndDate(dto.endDate());
+        return recurringExpense;
     }
 
     @Override
     public RecurringExpense toEntity(Long id, RecurringExpenseRequestDto dto) {
-        return null;
+        RecurringExpense recurringExpense = toEntity(dto);
+        //TODO
+        return recurringExpense;
     }
 }
