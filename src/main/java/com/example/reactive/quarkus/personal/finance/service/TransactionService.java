@@ -8,7 +8,7 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.util.List;
+import java.util.Set;
 
 @ApplicationScoped
 public class TransactionService {
@@ -21,17 +21,27 @@ public class TransactionService {
     }
 
     public Uni<TransactionResponseDto> getTransactionById(long transactionId) {
+        return transactionRepository.getTransactionById(transactionId)
+                .map(transactionConverter::toDto);
     }
 
-    public Multi<List<TransactionResponseDto>> getAllTransaction() {
+    public Multi<Set<TransactionResponseDto>> getAllTransaction() {
+        return transactionRepository.getAllTransactions()
+                .toMulti()
+                .map(transactionConverter::toDto);
     }
 
     public Uni<TransactionResponseDto> createTransaction(TransactionRequestDto transactionRequestDto) {
+        return transactionRepository.saveTransaction(transactionConverter.toEntity(transactionRequestDto))
+                .map(transactionConverter::toDto);
     }
 
     public Uni<TransactionResponseDto> updateTransaction(TransactionRequestDto transactionRequestDto) {
+        return transactionRepository.saveTransaction(transactionConverter.toEntity(transactionRequestDto))
+                .map(transactionConverter::toDto);
     }
 
     public Uni<Void> deleteTransaction(long transactionId) {
+        return transactionRepository.deleteTransaction(transactionId);
     }
 }

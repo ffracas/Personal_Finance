@@ -3,7 +3,9 @@ package com.example.reactive.quarkus.personal.finance.converter;
 import com.example.reactive.quarkus.personal.finance.model.entity.Transaction;
 import com.example.reactive.quarkus.personal.finance.model.request.TransactionRequestDto;
 import com.example.reactive.quarkus.personal.finance.model.response.TransactionResponseDto;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class TransactionConverter implements Converter<TransactionRequestDto, TransactionResponseDto, Transaction> {
     @Override
     public TransactionResponseDto toDto(Transaction entity) {

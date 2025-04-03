@@ -7,7 +7,7 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Path("/transaction")
 public final class TransactionController {
@@ -26,7 +26,7 @@ public final class TransactionController {
 
     @GET
     @Path("/getAllTransaction")
-    public Multi<List<TransactionResponseDto>> getAllTransaction() {
+    public Multi<Set<TransactionResponseDto>> getAllTransaction() {
         return transactionService.getAllTransaction();
     }
 

@@ -10,7 +10,6 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -105,9 +104,7 @@ public final class RecurringExpenseService {
     public Multi<Set<RecurringExpenseResponseDto>> getAllRecurringExpense() {
         return recurringExpenseRepository.getAllRecurringExpenses()
                 .toMulti()
-                .map(expenses -> expenses.stream()
-                        .map(recurringExpenseConverter::toDto)
-                        .collect(Collectors.toSet()));
+                .map(recurringExpenseConverter::toDto);
     }
 
     /**
