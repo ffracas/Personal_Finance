@@ -110,4 +110,8 @@ public class UserService {
         return userRepository.saveUser(userConverter.toEntity(userRequestDto))
                 .map(userConverter::toDto);
     }
+
+    public Uni<Void> deleteUser(long idUser) {
+        return userRepository.deleteUser(idUser);
+    }
 }

@@ -135,4 +135,10 @@ public final class UserController {
     public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto) {
         return userService.updateUser(userRequestDto);
     }
+
+    @DELETE
+    @Path("/deleteUser/{userId}")
+    public Uni<Void> deleteUser(@PathParam("userId") Long userId) {
+        return userService.deleteUser(userId);
+    }
 }

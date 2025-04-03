@@ -27,4 +27,12 @@ public class UserRepository implements PanacheRepository<User> {
                 .onFailure()
                 .invoke(Log::error);
     }
+
+    @WithTransaction
+    public Uni<Void> deleteUser(long userId) {
+        return deleteById(userId)
+                .onFailure()
+                .invoke(Log::error)
+                .replaceWithVoid();
+    }
 }
