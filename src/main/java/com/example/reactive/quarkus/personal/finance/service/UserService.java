@@ -93,7 +93,7 @@ public class UserService {
      * @return a {@link Uni} emitting the created user as a {@link UserResponseDto}
      */
     public Uni<UserResponseDto> createUser(UserRequestDto userRequestDto) {
-        return userRepository.persistAndFlush(userConverter.toEntity(userRequestDto))
+        return userRepository.saveUser(userConverter.toEntity(userRequestDto))
                 .map(userConverter::toDto);
     }
 
@@ -107,7 +107,7 @@ public class UserService {
      * @return a {@link Uni} emitting the updated user as a {@link UserResponseDto}
      */
     public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto) {
-        return userRepository.persistAndFlush(userConverter.toEntity(userRequestDto))
+        return userRepository.saveUser(userConverter.toEntity(userRequestDto))
                 .map(userConverter::toDto);
     }
 }
