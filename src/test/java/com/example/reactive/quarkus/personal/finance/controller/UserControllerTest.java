@@ -115,4 +115,14 @@ public class UserControllerTest {
                 .body("name", equalTo("Updated User"))
                 .body("id", equalTo(userId));
     }
+
+    @Test
+    public void testDeleteUserById() {
+        given()
+                .pathParam("userId", 1)
+                .when()
+                .delete("/user/deleteUser/{userId}")
+                .then()
+                .statusCode(200);
+    }
 }
