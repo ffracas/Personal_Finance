@@ -16,19 +16,19 @@ public class RecurringExpense extends PanacheEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    public User user;
+    private User user;
 
     @Column(precision = 15, scale = 2, nullable = false)
-    public BigDecimal amount;
+    private BigDecimal amount;
 
     @Column(length = 100)
-    public String category;
+    private String category;
 
     @Column(length = 20)
-    public String frequency;
+    private String frequency;
 
     @Column(nullable = false)
-    public LocalDate startDate;
+    private LocalDate startDate;
 
-    public LocalDate endDate;
+    private LocalDate endDate;
 }

@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 @Setter
 public class User extends PanacheEntity {
     @Column(length = 100, nullable = false)
-    public String name;
+    private String name;
     @Column(unique = true, nullable = false)
-    public String email;
+    private String email;
     @Column(nullable = false)
-    public String passwordHash;
+    private String passwordHash;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    public LocalDateTime creationDate = LocalDateTime.now();
+    private LocalDateTime creationDate = LocalDateTime.now();
 }

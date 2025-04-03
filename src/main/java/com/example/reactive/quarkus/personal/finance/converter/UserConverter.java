@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class UserConverter implements Converter<UserRequestDto, UserResponseDto, User> {
     @Override
     public UserResponseDto toDto(User entity) {
-        return new UserResponseDto(entity.name, entity.email);
+        return new UserResponseDto(entity.getName(), entity.getEmail());
     }
 
     @Override
