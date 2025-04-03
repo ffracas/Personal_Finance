@@ -6,6 +6,14 @@ import com.example.reactive.quarkus.personal.finance.service.UserService;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.Set;
@@ -38,6 +46,9 @@ import java.util.Set;
  * @see UserResponseDto
  */
 @Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Tag(name = "User Management", description = "Operations related to user management")
 public final class UserController {
 
     private final UserService userService;
@@ -69,6 +80,13 @@ public final class UserController {
      */
     @GET
     @Path("/getUser/{userId}")
+    @Operation(summary = "Retrieve user details by ID")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "User found", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "404", description = "User not found"),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     public Uni<UserResponseDto> getUserById(@PathParam("userId") long userId) {
         return userService.getUserById(userId);
     }
@@ -88,6 +106,12 @@ public final class UserController {
      */
     @GET
     @Path("/getAllUser")
+    @Operation(summary = "Retrieve all users")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Successfully retrieved list", content = @Content(mediaType = "application/json",
+                    schema = @Schema(type = SchemaType.ARRAY, implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     public Multi<Set<UserResponseDto>> getAllUser() {
         return userService.getAllUser();
     }
@@ -110,6 +134,13 @@ public final class UserController {
     @POST
     @Path("/createUser")
     @ResponseStatus(201)
+    @Operation(summary = "Create a new user")
+    @APIResponses({
+            @APIResponse(responseCode = "201", description = "User created successfully", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "400", description = "Invalid input"),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     public Uni<UserResponseDto> createUser(UserRequestDto userRequestDto) {
         return userService.createUser(userRequestDto);
     }
@@ -132,6 +163,14 @@ public final class UserController {
      */
     @PUT
     @Path("/updateUser")
+    @Operation(summary = "Update an existing user")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "User updated successfully", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "400", description = "Invalid input"),
+            @APIResponse(responseCode = "404", description = "User not found"),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto) {
         return userService.updateUser(userRequestDto);
     }

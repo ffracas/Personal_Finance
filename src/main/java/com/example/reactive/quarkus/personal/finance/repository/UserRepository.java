@@ -10,7 +10,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 @ApplicationScoped
-public class UserRepository implements PanacheRepository<User> {
+public final class UserRepository implements PanacheRepository<User> {
     @WithTransaction
     public Uni<User> getUserById(long id) {
         return findById(id);
