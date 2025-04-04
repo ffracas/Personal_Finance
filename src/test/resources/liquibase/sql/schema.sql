@@ -1,6 +1,9 @@
 --liquibase formatted sql
 
 --changeset aspeeencinaf:1
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+--changeset aspeeencinaf:2
 CREATE TABLE IF NOT EXISTS Users
 (
     id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -10,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Users
     creation_date TIMESTAMP        DEFAULT CURRENT_TIMESTAMP
 );
 
---changeset aspeeencinaf:2
+--changeset aspeeencinaf:3
 CREATE TABLE IF NOT EXISTS FinancialGoals
 (
     id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -24,7 +27,7 @@ CREATE TABLE IF NOT EXISTS FinancialGoals
     FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE
 );
 
---changeset aspeeencinaf:3
+--changeset aspeeencinaf:4
 CREATE TABLE IF NOT EXISTS Transactions
 (
     id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -38,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Transactions
 );
 
 
---changeset aspeeencinaf:4
+--changeset aspeeencinaf:5
 CREATE TABLE IF NOT EXISTS RecurringExpenses
 (
     id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -51,7 +54,7 @@ CREATE TABLE IF NOT EXISTS RecurringExpenses
     FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE
 );
 
---changeset aspeeencinaf:5
+--changeset aspeeencinaf:6
 CREATE TABLE IF NOT EXISTS Investments
 (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -65,7 +68,7 @@ CREATE TABLE IF NOT EXISTS Investments
     FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE
 );
 
---changeset aspeeencinaf:6
+--changeset aspeeencinaf:7
 CREATE TABLE IF NOT EXISTS DepositAccounts
 (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -77,7 +80,7 @@ CREATE TABLE IF NOT EXISTS DepositAccounts
     FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE
 );
 
---changeset aspeeencinaf:7
+--changeset aspeeencinaf:8
 CREATE TABLE IF NOT EXISTS Bonds
 (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -92,10 +95,10 @@ CREATE TABLE IF NOT EXISTS Bonds
     FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE
 );
 
---changeset aspeeencinaf:8
+--changeset aspeeencinaf:9
 DROP VIEW IF EXISTS WealthOverview;
 
---changeset aspeeencinaf:9
+--changeset aspeeencinaf:10
 CREATE VIEW WealthOverview AS
 SELECT u.id                                                                    AS user_id,
        COALESCE(SUM(i.current_value), 0) +
