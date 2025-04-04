@@ -2,12 +2,16 @@ package com.example.reactive.quarkus.personal.finance.model.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "Transactions")
+@Getter
+@Setter
 public class Transaction extends PanacheEntity {
 
     @ManyToOne
