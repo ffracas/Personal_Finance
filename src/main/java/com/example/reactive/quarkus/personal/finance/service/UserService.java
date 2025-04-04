@@ -111,7 +111,7 @@ public class UserService {
                 .map(userConverter::toDto);
     }
 
-    public Uni<Void> deleteUser(long idUser) {
+    public Uni<Boolean> deleteUser(long idUser) {
         return userRepository.deleteUser(idUser);
     }
 }
