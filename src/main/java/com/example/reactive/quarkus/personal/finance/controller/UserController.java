@@ -141,7 +141,7 @@ public final class UserController {
     @Path("/updateUser/{userId}")
     public Uni<Response> updateUser(UserRequestDto userRequestDto, @PathParam("userId") String userId) {
         return userService.updateUser(userRequestDto, userId)
-                .map(user -> Response.ok(user).status(Response.Status.NO_CONTENT).build())
+                .map(user -> Response.status(Response.Status.OK).entity(user).build())
                 .onFailure()
                 .recoverWithItem(throwable -> Response.status(Response.Status.NOT_FOUND).build());
     }
