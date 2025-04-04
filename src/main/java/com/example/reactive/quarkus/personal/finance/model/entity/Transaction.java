@@ -24,12 +24,12 @@ public class Transaction extends PanacheEntity {
     @Column(length = 100)
     public String category;
 
-    @Column(length = 100)
+    @Column(name = "sub_category", length = 100)
     public String subCategory;
 
     @Column(length = 10, nullable = false)
     public String type; // Consider using an enum for 'income' and 'expense'
 
-    @Column(nullable = false)
+    @Column(name = "transaction_date", nullable = false)
     public LocalDate transactionDate;
 }

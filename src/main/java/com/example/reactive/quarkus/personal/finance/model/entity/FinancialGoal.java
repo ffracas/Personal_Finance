@@ -17,26 +17,26 @@ public class FinancialGoal extends PanacheEntity {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     public User user;
 
-    @Column(precision = 15, scale = 2)
+    @Column(name = "emergency_fund_target", precision = 15, scale = 2)
     public BigDecimal emergencyFundTarget;
 
-    @Column(precision = 15, scale = 2)
+    @Column(name = "investment_target", precision = 15, scale = 2)
     public BigDecimal investmentTarget;
 
-    @Column(precision = 15, scale = 2)
+    @Column(name = "bonds_target", precision = 15, scale = 2)
     public BigDecimal bondsTarget;
 
-    @Column(precision = 15, scale = 2)
+    @Column(name = "loans_target", precision = 15, scale = 2)
     public BigDecimal loansTarget;
 
-    @Column(precision = 5, scale = 2)
+    @Column(name = "investment_allocation", precision = 5, scale = 2)
     public BigDecimal investmentAllocation;
-
-    @Column(precision = 5, scale = 2)
+    @Transient
+    @Column(name = "current_expenses_allocation", precision = 5, scale = 2)
     public BigDecimal currentExpensesAllocation;
-
-    @Column(precision = 5, scale = 2)
+    @Transient
+    @Column(name = "lifestyle_expensive_allocation", precision = 5, scale = 2)
     public BigDecimal lifestyleExpensesAllocation;
-
+    @Column(name = "emergency_months")
     public Integer emergencyMonths;
 }

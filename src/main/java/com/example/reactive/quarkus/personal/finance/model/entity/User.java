@@ -18,8 +18,8 @@ public class User extends PanacheEntity {
     public String name;
     @Column(unique = true, nullable = false)
     public String email;
-    @Column(nullable = false)
+    @Column(name = "password_hash", nullable = false)
     public String passwordHash;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "creation_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     public LocalDateTime creationDate = LocalDateTime.now();
 }

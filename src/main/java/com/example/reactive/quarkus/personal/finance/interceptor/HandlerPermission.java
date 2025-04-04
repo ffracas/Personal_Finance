@@ -1,7 +1,6 @@
 package com.example.reactive.quarkus.personal.finance.interceptor;
 
 import com.example.reactive.quarkus.personal.finance.webclient.SessionClient;
-import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -20,7 +19,7 @@ public class HandlerPermission {
     public Uni<Void> filter(ResteasyReactiveContainerRequestContext requestContext) {
         String authorization = requestContext.getHeaderString("authorization");
         return sessionClient.checkToken(authorization).map(x -> {
-            Log.info(x);
+
             return x;
         }).replaceWithVoid();
     }

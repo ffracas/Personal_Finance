@@ -27,8 +27,9 @@ public class RecurringExpense extends PanacheEntity {
     @Column(length = 20)
     public String frequency;
 
-    @Column(nullable = false)
+    @Column(name = "start_date", nullable = false)
     public LocalDate startDate;
 
+    @Column(name = "end_date")
     public LocalDate endDate;
 }

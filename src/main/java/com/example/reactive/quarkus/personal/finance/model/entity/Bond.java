@@ -24,18 +24,18 @@ public class Bond extends PanacheEntity {
     @Column(length = 50)
     public String code;
 
-    @Column(precision = 15, scale = 2, nullable = false)
+    @Column(name = "invested_amount", precision = 15, scale = 2, nullable = false)
     public BigDecimal investedAmount;
 
-    @Column(precision = 5, scale = 2)
+    @Column(name = "annual_rate", precision = 5, scale = 2)
     public BigDecimal annualRate;
 
-    @Column(nullable = false)
+    @Column(name = "maturity_date", nullable = false)
     public LocalDate maturityDate;
 
-    @Column(length = 50)
+    @Column(name = "coupon_type", length = 50)
     public String couponType;
 
-    @Column(precision = 15, scale = 2)
+    @Column(name = "current_value", precision = 15, scale = 2)
     public BigDecimal currentValue;
 }

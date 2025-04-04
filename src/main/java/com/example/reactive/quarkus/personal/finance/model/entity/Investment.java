@@ -24,15 +24,15 @@ public class Investment extends PanacheEntity {
     @Column(length = 50)
     public String code;
 
-    @Column(precision = 15, scale = 4)
+    @Column(name = "shares_owned", precision = 15, scale = 4)
     public BigDecimal sharesOwned;
 
-    @Column(precision = 15, scale = 4)
+    @Column(name = "unit_price", precision = 15, scale = 4)
     public BigDecimal unitPrice;
 
-    @Column(nullable = false)
+    @Column(name = "investment_date", nullable = false)
     public LocalDate investmentDate;
 
-    @Column(precision = 15, scale = 2)
+    @Column(name = "current_value", precision = 15, scale = 2)
     public BigDecimal currentValue;
 }
