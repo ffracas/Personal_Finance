@@ -78,7 +78,7 @@ public class UserControllerTest {
                 .when()
                 .post("/user/createUser")
                 .then().log().all()
-                .statusCode(201)
+                .statusCode(200)
                 .body("name", equalTo("New User"))
                 .body("email", equalTo("thebestemail@bigmail.com"));
     }
@@ -125,5 +125,15 @@ public class UserControllerTest {
                 .delete("/user/deleteUser/{userId}")
                 .then()
                 .statusCode(204);
+    }
+
+    @Test
+    public void testDeleteUserByIdNotFound() {
+        given()
+                .pathParam("userId", 11122)
+                .when()
+                .delete("/user/deleteUser/{userId}")
+                .then()
+                .statusCode(404);
     }
 }

@@ -30,10 +30,7 @@ public class UserRepository implements PanacheRepositoryBase<User, UUID> {
     }
 
     @WithTransaction
-    public Uni<Void> deleteUser(UUID userId) {
-        return deleteById(userId)
-                .onFailure()
-                .invoke(Log::error)
-                .replaceWithVoid();
+    public Uni<Boolean> deleteUser(long userId) {
+        return deleteById(userId);
     }
 }
