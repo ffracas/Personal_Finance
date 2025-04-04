@@ -121,7 +121,7 @@ public class UserService {
     public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto, String userId) {
         return userRepository.findById(UUID.fromString(userId))
                 .map(user -> updateUser(user, userRequestDto))
-                .flatMap(user -> userRepository.persist(userConverter.toEntity(userRequestDto))
+                .flatMap(user -> userRepository.persist(user)
                         .map(userConverter::toDto));
     }
 

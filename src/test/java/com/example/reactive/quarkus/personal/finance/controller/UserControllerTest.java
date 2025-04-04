@@ -114,7 +114,7 @@ public class UserControllerTest {
                 .then()
                 .statusCode(200)
                 .body("name", equalTo("Updated User"))
-                .body("id", equalTo(userId));
+                .body("userId", equalTo(userId));
     }
 
     @Test
