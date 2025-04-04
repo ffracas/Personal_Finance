@@ -70,7 +70,7 @@ public final class UserController {
      */
     @GET
     @Path("/getUser/{userId}")
-    public Uni<Response> getUserById(@PathParam("userId") long userId) {
+    public Uni<Response> getUserById(@PathParam("userId") String userId) {
         return userService.getUserById(userId)
                 .map(user -> Response.ok(user).status(Response.Status.OK).build())
                 .onFailure()
@@ -138,17 +138,17 @@ public final class UserController {
      * @see UserService#updateUser(UserRequestDto, String)
      */
     @PUT
-    @Path("/updateUser")
-    public Uni<Response> updateUser(UserRequestDto userRequestDto) {
-        return userService.updateUser(userRequestDto)
-                .map(user -> Response.ok(user).status(Response.Status.OK).build())
+    @Path("/updateUser/{userId}")
+    public Uni<Response> updateUser(UserRequestDto userRequestDto, @PathParam("userId") String userId) {
+        return userService.updateUser(userRequestDto, userId)
+                .map(user -> Response.ok(user).status(Response.Status.NO_CONTENT).build())
                 .onFailure()
                 .recoverWithItem(throwable -> Response.status(Response.Status.NOT_FOUND).build());
     }
 
     @DELETE
     @Path("/deleteUser/{userId}")
-    public Uni<Response> deleteUser(@PathParam("userId") Long userId) {
+    public Uni<Response> deleteUser(@PathParam("userId") String userId) {
         return userService.deleteUser(userId)
                 .map(response -> response ? Response.status(Response.Status.NO_CONTENT).build() : Response.status(Response.Status.NOT_FOUND).build())
                 .onFailure()

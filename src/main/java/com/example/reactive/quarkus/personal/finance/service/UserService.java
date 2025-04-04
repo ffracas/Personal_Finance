@@ -125,7 +125,7 @@ public class UserService {
                         .map(userConverter::toDto));
     }
 
-    public Uni<Void> deleteUser(String userId) {
+    public Uni<Boolean> deleteUser(String userId) {
         return userRepository.deleteUser(UUID.fromString(userId));
     }
 }

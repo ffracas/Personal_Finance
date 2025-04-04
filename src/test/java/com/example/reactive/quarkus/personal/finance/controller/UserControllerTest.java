@@ -99,7 +99,7 @@ public class UserControllerTest {
                 .when()
                 .post("/user/createUser")
                 .then()
-                .statusCode(201)
+                .statusCode(204)
                 .extract().path("userId");
 
         // Now update the user with a new name.

@@ -30,7 +30,7 @@ public class UserRepository implements PanacheRepositoryBase<User, UUID> {
     }
 
     @WithTransaction
-    public Uni<Boolean> deleteUser(long userId) {
+    public Uni<Boolean> deleteUser(UUID userId) {
         return deleteById(userId);
     }
 }
