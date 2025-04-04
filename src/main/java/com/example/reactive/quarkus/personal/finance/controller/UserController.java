@@ -6,6 +6,7 @@ import com.example.reactive.quarkus.personal.finance.service.UserService;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.Set;
@@ -69,8 +70,11 @@ public final class UserController {
      */
     @GET
     @Path("/getUser/{userId}")
-    public Uni<UserResponseDto> getUserById(@PathParam("userId") long userId) {
-        return userService.getUserById(userId);
+    public Uni<Response> getUserById(@PathParam("userId") long userId) {
+        return userService.getUserById(userId)
+                .map(user -> Response.ok(user).status(Response.Status.OK).build())
+                .onFailure()
+                .recoverWithItem(throwable -> Response.status(Response.Status.NOT_FOUND).build());
     }
 
     /**
@@ -110,8 +114,11 @@ public final class UserController {
     @POST
     @Path("/createUser")
     @ResponseStatus(201)
-    public Uni<UserResponseDto> createUser(UserRequestDto userRequestDto) {
-        return userService.createUser(userRequestDto);
+    public Uni<Response> createUser(UserRequestDto userRequestDto) {
+        return userService.createUser(userRequestDto)
+                .map(user -> Response.ok(user).status(Response.Status.OK).build())
+                .onFailure()
+                .recoverWithItem(throwable -> Response.status(Response.Status.BAD_REQUEST).build());
     }
 
     /**
@@ -132,13 +139,19 @@ public final class UserController {
      */
     @PUT
     @Path("/updateUser")
-    public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto) {
-        return userService.updateUser(userRequestDto);
+    public Uni<Response> updateUser(UserRequestDto userRequestDto) {
+        return userService.updateUser(userRequestDto)
+                .map(user -> Response.ok(user).status(Response.Status.OK).build())
+                .onFailure()
+                .recoverWithItem(throwable -> Response.status(Response.Status.NOT_FOUND).build());
     }
 
     @DELETE
     @Path("/deleteUser/{userId}")
-    public Uni<Void> deleteUser(@PathParam("userId") Long userId) {
-        return userService.deleteUser(userId);
+    public Uni<Response> deleteUser(@PathParam("userId") Long userId) {
+        return userService.deleteUser(userId)
+                .map(response -> response ? Response.status(Response.Status.NO_CONTENT).build() : Response.status(Response.Status.NOT_FOUND).build())
+                .onFailure()
+                .recoverWithItem(throwable -> Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
     }
 }
