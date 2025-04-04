@@ -117,3 +117,4 @@ FROM Users u
          LEFT JOIN DepositAccounts da ON u.id = da.user_id
          LEFT JOIN Transactions t ON u.id = t.user_id
 GROUP BY u.id, fg.emergency_fund_target, fg.investment_target, fg.bonds_target, fg.loans_target;
+

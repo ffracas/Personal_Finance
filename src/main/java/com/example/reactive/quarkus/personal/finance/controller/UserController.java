@@ -65,11 +65,11 @@ public final class UserController {
      *               This value is extracted from the URL path parameter.
      * @return a {@code Uni<UserResponseDto>} that, when subscribed to, will emit the
      * user details corresponding to the given {@code userId}.
-     * @see UserService#getUserById(long)
+     * @see UserService#getUserById(String)
      */
     @GET
     @Path("/getUser/{userId}")
-    public Uni<UserResponseDto> getUserById(@PathParam("userId") long userId) {
+    public Uni<UserResponseDto> getUserById(@PathParam("userId") String userId) {
         return userService.getUserById(userId);
     }
 
@@ -128,17 +128,17 @@ public final class UserController {
      *                       It should be included in the request body in JSON format.
      * @return a {@code Uni<UserResponseDto>} that, when subscribed to, emits the
      * updated user details.
-     * @see UserService#updateUser(UserRequestDto)
+     * @see UserService#updateUser(UserRequestDto, String)
      */
     @PUT
-    @Path("/updateUser")
-    public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto) {
-        return userService.updateUser(userRequestDto);
+    @Path("/updateUser/{userId}")
+    public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto, @PathParam("userId") String userId) {
+        return userService.updateUser(userRequestDto, userId);
     }
 
     @DELETE
     @Path("/deleteUser/{userId}")
-    public Uni<Void> deleteUser(@PathParam("userId") Long userId) {
+    public Uni<Void> deleteUser(@PathParam("userId") String userId) {
         return userService.deleteUser(userId);
     }
 }

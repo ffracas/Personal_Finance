@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class UserConverter implements Converter<UserRequestDto, UserResponseDto, User> {
     @Override
     public UserResponseDto toDto(User entity) {
-        return new UserResponseDto(entity.name, entity.email);
+        return new UserResponseDto(entity.getId().toString(), entity.getName(), entity.getEmail());
     }
 
     @Override
@@ -23,7 +23,6 @@ public class UserConverter implements Converter<UserRequestDto, UserResponseDto,
 
     @Override
     public User toEntity(Long id, UserRequestDto dto) {
-        User user = toEntity(dto);
-        return user;
+        return toEntity(dto);
     }
 }
