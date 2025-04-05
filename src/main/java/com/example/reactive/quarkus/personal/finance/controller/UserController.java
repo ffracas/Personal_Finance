@@ -6,7 +6,15 @@ import com.example.reactive.quarkus.personal.finance.service.UserService;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.Set;
@@ -39,6 +47,9 @@ import java.util.Set;
  * @see UserResponseDto
  */
 @Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Tag(name = "User Management", description = "Operations related to user management")
 public final class UserController {
 
     private final UserService userService;
@@ -68,6 +79,13 @@ public final class UserController {
      * user details corresponding to the given {@code userId}.
      * @see UserService#getUserById(String)
      */
+    @Operation(summary = "Retrieve user details by ID")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "User found", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "404", description = "User not found"),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     @GET
     @Path("/getUser/{userId}")
     public Uni<Response> getUserById(@PathParam("userId") String userId) {
@@ -90,6 +108,12 @@ public final class UserController {
      * of user response DTOs containing details for all users.
      * @see UserService#getAllUser()
      */
+    @Operation(summary = "Retrieve all users")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Successfully retrieved list", content = @Content(mediaType = "application/json",
+                    schema = @Schema(type = SchemaType.ARRAY, implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     @GET
     @Path("/getAllUser")
     public Multi<Set<UserResponseDto>> getAllUser() {
@@ -111,12 +135,19 @@ public final class UserController {
      * response DTO representing the newly created user.
      * @see UserService#createUser(UserRequestDto)
      */
+    @ResponseStatus(201)
+    @Operation(summary = "Create a new user")
+    @APIResponses({
+            @APIResponse(responseCode = "201", description = "User created successfully", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "400", description = "Invalid input"),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     @POST
     @Path("/createUser")
-    @ResponseStatus(201)
     public Uni<Response> createUser(UserRequestDto userRequestDto) {
         return userService.createUser(userRequestDto)
-                .map(user -> Response.ok(user).status(Response.Status.OK).build())
+                .map(user -> Response.ok(user).status(Response.Status.CREATED).build())
                 .onFailure()
                 .recoverWithItem(throwable -> Response.status(Response.Status.BAD_REQUEST).build());
     }
@@ -137,11 +168,19 @@ public final class UserController {
      * updated user details.
      * @see UserService#updateUser(UserRequestDto, String)
      */
+    @Operation(summary = "Update an existing user")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "User updated successfully", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserResponseDto.class))),
+            @APIResponse(responseCode = "400", description = "Invalid input"),
+            @APIResponse(responseCode = "404", description = "User not found"),
+            @APIResponse(responseCode = "500", description = "Internal server error")
+    })
     @PUT
     @Path("/updateUser/{userId}")
     public Uni<Response> updateUser(UserRequestDto userRequestDto, @PathParam("userId") String userId) {
         return userService.updateUser(userRequestDto, userId)
-                .map(user -> Response.status(Response.Status.OK).entity(user).build())
+                .map(user -> Response.ok(user).status(Response.Status.OK).build())
                 .onFailure()
                 .recoverWithItem(throwable -> Response.status(Response.Status.NOT_FOUND).build());
     }

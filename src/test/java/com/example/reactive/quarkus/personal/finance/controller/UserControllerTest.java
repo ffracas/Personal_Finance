@@ -78,7 +78,7 @@ public class UserControllerTest {
                 .when()
                 .post("/user/createUser")
                 .then().log().all()
-                .statusCode(200)
+                .statusCode(201)
                 .body("name", equalTo("New User"))
                 .body("email", equalTo("thebestemail@bigmail.com"));
     }
@@ -99,7 +99,7 @@ public class UserControllerTest {
                 .when()
                 .post("/user/createUser")
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract().path("userId");
 
         // Now update the user with a new name.
@@ -130,10 +130,20 @@ public class UserControllerTest {
     @Test
     public void testDeleteUserByIdNotFound() {
         given()
-                .pathParam("userId", 11122)
+                .pathParam("userId", "1658cc09-ef5d-4f5b-1111-d9f7abfbfbec")
                 .when()
                 .delete("/user/deleteUser/{userId}")
                 .then()
                 .statusCode(404);
+    }
+
+    @Test
+    public void testDeleteUserByIdInternalServerError() {
+        given()
+                .pathParam("userId", 11122)
+                .when()
+                .delete("/user/deleteUser/{userId}")
+                .then()
+                .statusCode(500);
     }
 }

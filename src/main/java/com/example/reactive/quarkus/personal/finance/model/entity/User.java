@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 public class User extends PanacheEntityBase {
     @Column(length = 100, nullable = false)
-    public String name;
+    private String name;
     @Column(unique = true, nullable = false)
     public String email;
     @Column(name = "password_hash", nullable = false)

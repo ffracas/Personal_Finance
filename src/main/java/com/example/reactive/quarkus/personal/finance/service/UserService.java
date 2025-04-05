@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  * meaning it is a long-lived CDI bean, initialized once per application.</p>
  */
 @ApplicationScoped
-public class UserService {
+public final class UserService {
     private final UserRepository userRepository;
     private final UserConverter userConverter;
 
