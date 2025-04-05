@@ -1,14 +1,17 @@
 package com.example.reactive.quarkus.personal.finance.service;
 
 import com.example.reactive.quarkus.personal.finance.converter.UserConverter;
+import com.example.reactive.quarkus.personal.finance.model.entity.User;
 import com.example.reactive.quarkus.personal.finance.model.request.UserRequestDto;
 import com.example.reactive.quarkus.personal.finance.model.response.UserResponseDto;
 import com.example.reactive.quarkus.personal.finance.repository.UserRepository;
+import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +55,13 @@ public final class UserService {
         this.userConverter = userConverter;
     }
 
+    private static User updateUser(User user, UserRequestDto userRequestDto) {
+        user.setEmail(userRequestDto.email());
+        user.setPasswordHash(userRequestDto.password());
+        user.setName(userRequestDto.name());
+        return user;
+    }
+
     /**
      * Retrieves a user by its unique ID.
      *
@@ -62,8 +72,8 @@ public final class UserService {
      * @return a {@link Uni} emitting the user data as a {@link UserResponseDto},
      * or an empty result if no user is found
      */
-    public Uni<UserResponseDto> getUserById(long id) {
-        return userRepository.getUserById(id)
+    public Uni<UserResponseDto> getUserById(String id) {
+        return userRepository.getUserById(UUID.fromString(id))
                 .map(userConverter::toDto);
     }
 
@@ -104,10 +114,18 @@ public final class UserService {
      * The updated entity is then converted back into a DTO.</p>
      *
      * @param userRequestDto the updated user data
+     * @param userId
      * @return a {@link Uni} emitting the updated user as a {@link UserResponseDto}
      */
-    public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto) {
-        return userRepository.saveUser(userConverter.toEntity(userRequestDto))
-                .map(userConverter::toDto);
+    @WithTransaction
+    public Uni<UserResponseDto> updateUser(UserRequestDto userRequestDto, String userId) {
+        return userRepository.findById(UUID.fromString(userId))
+                .map(user -> updateUser(user, userRequestDto))
+                .flatMap(user -> userRepository.persist(user)
+                        .map(userConverter::toDto));
+    }
+
+    public Uni<Boolean> deleteUser(String userId) {
+        return userRepository.deleteUser(UUID.fromString(userId));
     }
 }

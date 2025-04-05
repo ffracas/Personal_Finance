@@ -42,12 +42,12 @@ public class UserControllerTest {
     @Test
     public void testGetUserById() {
         given()
-                .pathParam("userId", 1)
+                .pathParam("userId", "1658cc09-ef5d-4f5b-8fe8-d9f8abfbfbec")
                 .when()
                 .get("/user/getUser/{userId}")
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(1));
+                .body("email", equalTo("thegatesbestmail@test"));
     }
 
     /**
@@ -78,7 +78,7 @@ public class UserControllerTest {
                 .when()
                 .post("/user/createUser")
                 .then().log().all()
-                .statusCode(201)
+                .statusCode(200)
                 .body("name", equalTo("New User"))
                 .body("email", equalTo("thebestemail@bigmail.com"));
     }
@@ -93,26 +93,47 @@ public class UserControllerTest {
         String requestBody = "{\"name\": \"New User To Update\",\"password\": \"TheP4ssW0r41sTh383\",\"email\": \"thebestemailupdated@bigmail.com\"}";
 
 
-        int userId = given()
+        String userId = given()
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
                 .post("/user/createUser")
                 .then()
-                .statusCode(201)
-                .extract().path("id");
+                .statusCode(204)
+                .extract().path("userId");
 
         // Now update the user with a new name.
-        String updateRequest = "{\"id\": " + userId + ", \"name\": \"Updated User\"}";
+        String updateRequest = "{\"name\": \"Updated User\",\"password\": \"TheP4ssW0r41sTh383\",\"email\": \"thebestemailupdated@bigmail.com\"}";
 
         given()
                 .contentType(ContentType.JSON)
                 .body(updateRequest)
+                .pathParam("userId", userId)
                 .when()
-                .put("/user/updateUser")
+                .put("/user/updateUser/{userId}")
                 .then()
                 .statusCode(200)
                 .body("name", equalTo("Updated User"))
-                .body("id", equalTo(userId));
+                .body("userId", equalTo(userId));
+    }
+
+    @Test
+    public void testDeleteUserById() {
+        given()
+                .pathParam("userId", "1658cc09-ef5d-4f5b-8fe8-d9f7abfbfbec")
+                .when()
+                .delete("/user/deleteUser/{userId}")
+                .then()
+                .statusCode(204);
+    }
+
+    @Test
+    public void testDeleteUserByIdNotFound() {
+        given()
+                .pathParam("userId", 11122)
+                .when()
+                .delete("/user/deleteUser/{userId}")
+                .then()
+                .statusCode(404);
     }
 }
