@@ -1,18 +1,19 @@
 package com.example.reactive.quarkus.personal.finance.repository;
 
 import com.example.reactive.quarkus.personal.finance.model.entity.Transaction;
-import io.quarkus.hibernate.reactive.panache.PanacheRepository;
+import io.quarkus.hibernate.reactive.panache.PanacheRepositoryBase;
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
-public class TransactionRepository implements PanacheRepository<Transaction> {
+public class TransactionRepository implements PanacheRepositoryBase<Transaction, UUID> {
     @WithTransaction
-    public Uni<Transaction> getTransactionById(long id) {
+    public Uni<Transaction> getTransactionById(UUID id) {
         return findById(id);
     }
 
@@ -29,10 +30,7 @@ public class TransactionRepository implements PanacheRepository<Transaction> {
     }
 
     @WithTransaction
-    public Uni<Void> deleteTransaction(long transaction) {
-        return deleteById(transaction)
-                .onFailure()
-                .invoke(Log::error)
-                .replaceWithVoid();
+    public Uni<Boolean> deleteTransaction(UUID transaction) {
+        return deleteById(transaction);
     }
 }

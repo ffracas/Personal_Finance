@@ -7,6 +7,7 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -14,7 +15,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.Set;
@@ -147,7 +147,7 @@ public final class UserController {
     @Path("/createUser")
     public Uni<Response> createUser(UserRequestDto userRequestDto) {
         return userService.createUser(userRequestDto)
-                .map(user -> Response.ok(user).status(Response.Status.OK).build())
+                .map(user -> Response.ok(user).status(Response.Status.CREATED).build())
                 .onFailure()
                 .recoverWithItem(throwable -> Response.status(Response.Status.BAD_REQUEST).build());
     }
@@ -180,7 +180,7 @@ public final class UserController {
     @Path("/updateUser/{userId}")
     public Uni<Response> updateUser(UserRequestDto userRequestDto, @PathParam("userId") String userId) {
         return userService.updateUser(userRequestDto, userId)
-                .map(user -> Response.ok(user).status(Response.Status.NO_CONTENT).build())
+                .map(user -> Response.ok(user).status(Response.Status.OK).build())
                 .onFailure()
                 .recoverWithItem(throwable -> Response.status(Response.Status.NOT_FOUND).build());
     }
