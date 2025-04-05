@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class TransactionConverter implements Converter<TransactionRequestDto, TransactionResponseDto, Transaction> {
     @Override
     public TransactionResponseDto toDto(Transaction entity) {
-        return new TransactionResponseDto(entity.getUser().id, entity.getAmount(), entity.getCategory(), entity.getSubCategory(),
+        return new TransactionResponseDto(entity.getUser().getId(), entity.getAmount(), entity.getCategory(), entity.getSubCategory(),
                 entity.getType(), entity.getTransactionDate());
     }
 

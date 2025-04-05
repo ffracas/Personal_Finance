@@ -17,24 +17,6 @@ import java.util.UUID;
 public class Transaction extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-<<<<<<< HEAD
-    private User user;
-
-    @Column(precision = 15, scale = 2, nullable = false)
-    private BigDecimal amount;
-
-    @Column(length = 100)
-    private String category;
-
-    @Column(length = 100)
-    private String subCategory;
-
-    @Column(length = 10, nullable = false)
-    private String type; // Consider using an enum for 'income' and 'expense'
-
-    @Column(nullable = false)
-    private LocalDate transactionDate;
-=======
     public User user;
     @Column(precision = 15, scale = 2, nullable = false)
     public BigDecimal amount;
@@ -51,5 +33,4 @@ public class Transaction extends PanacheEntityBase {
     @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
->>>>>>> develop
 }

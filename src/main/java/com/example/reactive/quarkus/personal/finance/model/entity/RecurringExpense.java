@@ -17,23 +17,6 @@ import java.util.UUID;
 public class RecurringExpense extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-<<<<<<< HEAD
-    private User user;
-
-    @Column(precision = 15, scale = 2, nullable = false)
-    private BigDecimal amount;
-
-    @Column(length = 100)
-    private String category;
-
-    @Column(length = 20)
-    private String frequency;
-
-    @Column(nullable = false)
-    private LocalDate startDate;
-
-    private LocalDate endDate;
-=======
     public User user;
     @Column(precision = 15, scale = 2, nullable = false)
     public BigDecimal amount;
@@ -50,5 +33,4 @@ public class RecurringExpense extends PanacheEntityBase {
     @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
->>>>>>> develop
 }

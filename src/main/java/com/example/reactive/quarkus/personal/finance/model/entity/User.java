@@ -17,13 +17,6 @@ public class User extends PanacheEntityBase {
     @Column(length = 100, nullable = false)
     private String name;
     @Column(unique = true, nullable = false)
-<<<<<<< HEAD
-    private String email;
-    @Column(nullable = false)
-    private String passwordHash;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime creationDate = LocalDateTime.now();
-=======
     public String email;
     @Column(name = "password_hash", nullable = false)
     public String passwordHash;
@@ -34,5 +27,4 @@ public class User extends PanacheEntityBase {
     @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
->>>>>>> develop
 }
