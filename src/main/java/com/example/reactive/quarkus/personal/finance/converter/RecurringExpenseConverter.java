@@ -12,8 +12,8 @@ import java.util.UUID;
 public class RecurringExpenseConverter implements Converter<RecurringExpenseRequestDto, RecurringExpenseResponseDto, RecurringExpense> {
     @Override
     public RecurringExpenseResponseDto toDto(RecurringExpense entity) {
-        return new RecurringExpenseResponseDto(entity.getId().toString(), entity.getAmount(), entity.getCategory(),
-                entity.getFrequency(), entity.getStartDate(), entity.getEndDate());
+        return new RecurringExpenseResponseDto(entity.getId().toString(), entity.getUser().getId().toString(),
+                entity.getAmount(), entity.getCategory(), entity.getFrequency(), entity.getStartDate(), entity.getEndDate());
     }
 
     @Override
