@@ -4,9 +4,11 @@ import com.example.reactive.quarkus.personal.finance.model.entity.Investment;
 import com.example.reactive.quarkus.personal.finance.model.entity.User;
 import com.example.reactive.quarkus.personal.finance.model.request.InvestmentRequestDto;
 import com.example.reactive.quarkus.personal.finance.model.response.InvestmentResponseDto;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.UUID;
 
+@ApplicationScoped
 public class InvestmentConverter implements Converter<InvestmentRequestDto, InvestmentResponseDto, Investment> {
     @Override
     public InvestmentResponseDto toDto(Investment entity) {
