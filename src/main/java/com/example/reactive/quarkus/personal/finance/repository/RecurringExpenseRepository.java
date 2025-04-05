@@ -4,6 +4,7 @@ import com.example.reactive.quarkus.personal.finance.model.entity.RecurringExpen
 import io.quarkus.hibernate.reactive.panache.PanacheRepositoryBase;
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.quarkus.logging.Log;
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -18,8 +19,8 @@ public final class RecurringExpenseRepository implements PanacheRepositoryBase<R
     }
 
     @WithTransaction
-    public Uni<List<RecurringExpense>> getAllRecurringExpenses() {
-        return listAll();
+    public Multi<List<RecurringExpense>> getAllRecurringExpenses() {
+        return listAll().toMulti();
     }
 
     @WithTransaction
